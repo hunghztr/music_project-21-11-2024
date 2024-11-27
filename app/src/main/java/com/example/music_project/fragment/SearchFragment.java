@@ -55,7 +55,8 @@ public class SearchFragment extends Fragment {
         songs = helper.getAllSongs();
         adaper = new SongAdapter(getActivity(),R.layout.song_item,songs,true);
         lv.setAdapter(adaper);
-
+        ArrayList<Song> newSong = new ArrayList<>();
+        newSong.addAll(songs);
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -64,7 +65,8 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ArrayList<Song> newSong = new ArrayList<>();
+                songs = helper.getAllSongs();
+                 newSong.clear();
                 String text = edtSearch.getText().toString();
                 String regex = ".*"+text+".*";
                 Pattern pattern = Pattern.compile(regex,Pattern.CASE_INSENSITIVE);
@@ -77,6 +79,9 @@ public class SearchFragment extends Fragment {
                 }
                 for(Song song : newSong){
                     Log.d("TAG", "onTextChanged: "+song.getSongName());
+                }
+                for(Song song : songs){
+                    Log.d("TAGG", "onTextChanged: "+song.getSongName());
                 }
                 if(newSong.size() > 0) {
                     adaper.clear();
@@ -94,7 +99,8 @@ public class SearchFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Animation.setAnimation(view);
-                Song song = songs.get(i);
+                Song song = newSong.get(i);
+                Log.d("CHECK", "onItemClick: "+song.getSongName()+" "+i);
                 Intent intent = new Intent(getActivity(), SubActivity.class);
                 intent.putExtra("song",song);
                 intent.putExtra("songs",songs);
