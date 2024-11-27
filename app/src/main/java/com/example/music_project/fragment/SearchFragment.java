@@ -77,12 +77,7 @@ public class SearchFragment extends Fragment {
                         newSong.add(songs.get(j));
                     }
                 }
-                for(Song song : newSong){
-                    Log.d("TAG", "onTextChanged: "+song.getSongName());
-                }
-                for(Song song : songs){
-                    Log.d("TAGG", "onTextChanged: "+song.getSongName());
-                }
+
                 if(newSong.size() > 0) {
                     adaper.clear();
                     adaper.addAll(newSong);

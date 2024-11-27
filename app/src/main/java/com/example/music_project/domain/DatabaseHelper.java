@@ -51,12 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_SINGER_NAME + " TEXT)";
         db.execSQL(createSongsTable);
 
-        String createOrdersTable = "CREATE TABLE IF NOT EXISTS " + TABLE_FAUVORITE_SONG + " (" +
-                COLUMN_FAU_ID + " INTEGER PRIMARY KEY , " +
-                COLUMN_FAU_IMG_ID + " INTEGER, " +
-                COLUMN_FAU_SONG_NAME + " TEXT," +
-                COLUMN_FAU_SINGER_NAME + " TEXT)";
-        db.execSQL(createOrdersTable);
+        String createFausTable = "CREATE TABLE IF NOT EXISTS " + TABLE_FAUVORITE_SONG + " (" +
+                COLUMN_FAU_ID + " INTEGER PRIMARY KEY )";
+        db.execSQL(createFausTable);
 
         String createAlbumsTable = "CREATE TABLE IF NOT EXISTS "+TABLE_ALBUM +" (" +
                 COLUMN_ALBUM_ID +" INTEGER PRIMARY KEY , " +
@@ -123,10 +120,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_FAU_ID, song.getFileId());
-        values.put(COLUMN_FAU_IMG_ID, song.getImageId());
-        values.put(COLUMN_FAU_SONG_NAME, song.getSongName());
-        values.put(COLUMN_FAU_SINGER_NAME, song.getSingerName());
-
         db.insert(TABLE_FAUVORITE_SONG, null, values);
         db.close();
     }
@@ -152,7 +145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<Song> getAllFauSongs() {
         ArrayList<Song> fauSongs = new ArrayList<>();
         SQLiteDatabase fauDb = this.getReadableDatabase();
-        String fauSelectQuery = "SELECT * FROM " + TABLE_FAUVORITE_SONG;
+        String fauSelectQuery = "SELECT " +
+                "("+COLUMN_ID+","+COLUMN_IMG_ID+","+COLUMN_SONG_NAME+","+COLUMN_SINGER_NAME+") " +
+                "FROM " + TABLE_FAUVORITE_SONG +" AS f INNER JOIN "+TABLE_SONG+" AS s  ON f.fau_id = s.id";
 
         Cursor fauCursor = fauDb.rawQuery(fauSelectQuery, null);
         if (fauCursor.moveToFirst()) {
