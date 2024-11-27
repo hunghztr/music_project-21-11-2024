@@ -23,9 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Bảng fauvorite song
     private static final String TABLE_FAUVORITE_SONG = "fauvorite_song";
     private static final String COLUMN_FAU_ID = "fau_id";
-    private static final String COLUMN_FAU_IMG_ID = "img_id";
-    private static final String COLUMN_FAU_SONG_NAME = "fau_song_name";
-    private static final String COLUMN_FAU_SINGER_NAME = "fau_singer_name";
+
 
     // Bảng album
     private static final String TABLE_ALBUM = "album";
@@ -145,10 +143,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public ArrayList<Song> getAllFauSongs() {
         ArrayList<Song> fauSongs = new ArrayList<>();
         SQLiteDatabase fauDb = this.getReadableDatabase();
-        String fauSelectQuery = "SELECT " +
-                "("+COLUMN_ID+","+COLUMN_IMG_ID+","+COLUMN_SONG_NAME+","+COLUMN_SINGER_NAME+") " +
-                "FROM " + TABLE_FAUVORITE_SONG +" AS f INNER JOIN "+TABLE_SONG+" AS s  ON f.fau_id = s.id";
-
+        String fauSelectQuery = "SELECT s.id, s.img_id, s.song_name, s.singer_name " +
+                "FROM " + TABLE_FAUVORITE_SONG + " AS f " +
+                "INNER JOIN " + TABLE_SONG + " AS s ON f.fau_id = s.id";
         Cursor fauCursor = fauDb.rawQuery(fauSelectQuery, null);
         if (fauCursor.moveToFirst()) {
             do {
