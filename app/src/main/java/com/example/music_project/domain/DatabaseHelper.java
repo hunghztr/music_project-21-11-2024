@@ -101,7 +101,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return songs;
     }
+    public ArrayList<AlbumDetail> getAllsAlbumDetail(){
+        ArrayList<AlbumDetail> albumDetails = new ArrayList<>();
+        String query = "SELECT * FROM "+TABLE_ALBUM_DETAIL;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                int songId = cursor.getInt(0);
+                int albumId = cursor.getInt(1);
+
+                albumDetails.add(new AlbumDetail(songId,albumId));
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return albumDetails;
+    }
     public void addSong(Song song) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -140,21 +159,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(TABLE_ALBUM_DETAIL,null,values);
         db.close();
     }
-    public ArrayList<Song> getAllFauSongs() {
-        ArrayList<Song> fauSongs = new ArrayList<>();
+    public ArrayList<Integer> getAllFauSongs() {
+        ArrayList<Integer> fauSongs = new ArrayList<>();
         SQLiteDatabase fauDb = this.getReadableDatabase();
-        String fauSelectQuery = "SELECT s.id, s.img_id, s.song_name, s.singer_name " +
-                "FROM " + TABLE_FAUVORITE_SONG + " AS f " +
-                "INNER JOIN " + TABLE_SONG + " AS s ON f.fau_id = s.id";
+        String fauSelectQuery = "SELECT * FROM "+TABLE_FAUVORITE_SONG;
         Cursor fauCursor = fauDb.rawQuery(fauSelectQuery, null);
         if (fauCursor.moveToFirst()) {
             do {
-                int id = fauCursor.getInt(0);
-                int imgId = fauCursor.getInt(1);
-                String songName = fauCursor.getString(2);
-                String singerName = fauCursor.getString(3);
-                Song song = new Song(imgId, songName, singerName, id);
-                fauSongs.add(song);
+               int temp = fauCursor.getInt(0);
+                fauSongs.add(temp);
             } while (fauCursor.moveToNext());
 
             fauCursor.close();

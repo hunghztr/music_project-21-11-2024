@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "779410400414",
+    "firebase_url": "https://music-759d1-default-rtdb.firebaseio.com",
+    "project_id": "music-759d1",
+    "storage_bucket": "music-759d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:779410400414:android:175b8fd3e82a6d0484878f",
+        "android_client_info": {
+          "package_name": "com.example.music_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Q_9y2PmYuBa3bevpNcD98M6eR7i-Elw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

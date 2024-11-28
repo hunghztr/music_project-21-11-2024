@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,13 @@ import com.example.music_project.R;
 import com.example.music_project.SubActivity;
 import com.example.music_project.domain.Album;
 import com.example.music_project.domain.AlbumAdapter;
+import com.example.music_project.domain.AlbumDetail;
 import com.example.music_project.domain.DatabaseHelper;
 import com.example.music_project.domain.Song;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -26,6 +32,7 @@ public class AlbumFragment extends Fragment {
     AlbumAdapter adaper;
     ArrayList<Song> songs;
     ArrayList<Album> albums;
+    ArrayList<AlbumDetail> details;
     DatabaseHelper helper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,22 +45,77 @@ public class AlbumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_album, container, false);
-        albums = helper.getAllAlbums();
-        adaper = new AlbumAdapter(getActivity(),R.layout.song_item,albums);
+        albums = new ArrayList<>();
+        songs = new ArrayList<>();
+        details = new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fetAlbum = database.getReference("Albums");
+        DatabaseReference fetSong = database.getReference("Songs");
+        DatabaseReference fetAlbumDetail = database.getReference("Albums Detail");
+        fetAlbum.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Album album = child.getValue(Album.class);
+                    albums.add(album);
+                }
+                adaper = new AlbumAdapter(getActivity(),R.layout.song_item,albums);
+                lvAlbum.setAdapter(adaper);
+            }
+        });
+        fetSong.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Song song = child.getValue(Song.class);
+                    songs.add(song);
+                }
+            }
+        });
+        fetAlbumDetail.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    AlbumDetail detail = child.getValue(AlbumDetail.class);
+                    details.add(detail);
+                }
+            }
+        });
         lvAlbum = view.findViewById(R.id.lvAlbum);
-        lvAlbum.setAdapter(adaper);
+
         lvAlbum.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Album album = albums.get(i);
-                ArrayList<Song> songs1 = helper.getAllSongsByAlbum(album.getId());
-                Song song = songs1.get(0);
+                ArrayList<Song> choiceSongs = getSongsByAlbum(album.getId());
+                Song song = new Song();
+                if(choiceSongs.size() > 0) {
+                    song = choiceSongs.get(0);
+                }
                 Intent intent = new Intent(getActivity(), SubActivity.class);
-                intent.putExtra("songs",songs1);
+                intent.putExtra("songs",choiceSongs);
                 intent.putExtra("song",song);
                 startActivity(intent);
             }
         });
         return view;
+    }
+
+    private ArrayList<Song> getSongsByAlbum(int id) {
+        ArrayList<Song> songs1 = new ArrayList<>();
+        ArrayList<AlbumDetail> details1 = new ArrayList<>();
+        for(AlbumDetail detail : details){
+            if(detail.getAlbumId() == id){
+                details1.add(detail);
+            }
+        }
+        for(Song song : songs){
+            for(AlbumDetail detail : details1) {
+                if (song.getFileId() == detail.getSongId()){
+                    songs1.add(song);
+                }
+            }
+        }
+        return songs1;
     }
 }

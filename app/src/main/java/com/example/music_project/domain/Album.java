@@ -4,7 +4,9 @@ public class Album {
     private int id;
     private String name;
     private String singerName;
+    public Album(){
 
+    }
     public Album(int id, String name, String singerName) {
         this.id = id;
         this.name = name;

@@ -42,18 +42,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         addFragment(new HomeFragment());
-        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
-        if(helper.isTableEmpty()){
-            ArrayList<Song> songs = DataForm.setSongData();
-            ArrayList<Album> albums = DataForm.setAlbumData();
-            for(Song song : songs){
-                helper.addSong(song);
-            }
-            for(Album album : albums){
-                helper.addAlbum(album);
-            }
-            DataForm.setSongInAlbum(songs,albums,helper);
-        }
+//        DatabaseHelper helper = new DatabaseHelper(MainActivity.this);
+//        if(helper.isTableEmpty()){
+//            ArrayList<Song> songs = DataForm.setSongData();
+//            ArrayList<Album> albums = DataForm.setAlbumData();
+//            for(Song song : songs){
+//                helper.addSong(song);
+//            }
+//            for(Album album : albums){
+//                helper.addAlbum(album);
+//            }
+//            DataForm.setSongInAlbum(songs,albums,helper);
+//        }
 
         navi = findViewById(R.id.navi);
         navi.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {

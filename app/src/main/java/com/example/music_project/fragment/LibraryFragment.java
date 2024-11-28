@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,10 @@ import com.example.music_project.domain.Animation;
 import com.example.music_project.domain.DatabaseHelper;
 import com.example.music_project.domain.Song;
 import com.example.music_project.domain.SongAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -44,11 +49,26 @@ public class LibraryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_library, container, false);
         lvLibrary = view.findViewById(R.id.lvLibrary);
-        this.songs = helper.getAllFauSongs();
-        if(songs != null){
-            adaper= new SongAdapter(getActivity(),R.layout.song_item,songs,false);
-            lvLibrary.setAdapter(adaper);
-        }
+        this.songs = new ArrayList<>();
+        ArrayList<Integer> faus = helper.getAllFauSongs();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fetSong = database.getReference("Songs");
+        fetSong.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Song song = child.getValue(Song.class);
+                    songs.add(song);
+                }
+
+                songs = filterSongs(faus);
+                if(songs != null){
+                    adaper= new SongAdapter(getActivity(),R.layout.song_item,songs,false);
+                    lvLibrary.setAdapter(adaper);
+                }
+            }
+        });
+
 
         lvLibrary.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,5 +82,17 @@ public class LibraryFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    private ArrayList<Song> filterSongs(ArrayList<Integer> faus) {
+        ArrayList<Song> songs1 = new ArrayList<>();
+        for(Integer i : faus){
+            for(Song song : songs){
+                if(song.getFileId() == i){
+                    songs1.add(song);
+                }
+            }
+        }
+        return songs1;
     }
 }

@@ -24,6 +24,10 @@ import com.example.music_project.domain.Animation;
 import com.example.music_project.domain.DatabaseHelper;
 import com.example.music_project.domain.Song;
 import com.example.music_project.domain.SongAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -40,7 +44,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helper = new DatabaseHelper(getContext());
+
     }
 
     @Override
@@ -48,15 +52,27 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        lv = view.findViewById(R.id.lv);
+       songs = new ArrayList<>();
+        ArrayList<Song> newSong = new ArrayList<>();
 
+        lv = view.findViewById(R.id.lv);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference fetSong = database.getReference("Songs");
+        fetSong.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot child : dataSnapshot.getChildren()) {
+                    Song song = child.getValue(Song.class);
+                    songs.add(song);
+                }
+                adaper = new SongAdapter(getActivity(),R.layout.song_item,songs,true);
+                lv.setAdapter(adaper);
+            }
+        });
         edtSearch = view.findViewById(R.id.edtSearch);
 
-        songs = helper.getAllSongs();
-        adaper = new SongAdapter(getActivity(),R.layout.song_item,songs,true);
-        lv.setAdapter(adaper);
-        ArrayList<Song> newSong = new ArrayList<>();
-        newSong.addAll(songs);
+
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -65,7 +81,7 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                songs = helper.getAllSongs();
+
                  newSong.clear();
                 String text = edtSearch.getText().toString();
                 String regex = ".*"+text+".*";

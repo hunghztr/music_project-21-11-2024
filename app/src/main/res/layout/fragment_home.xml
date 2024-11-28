@@ -53,6 +53,7 @@
                     android:id="@+id/btnHot1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/black_spotify"
                     android:text=""
                     app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
@@ -67,7 +68,7 @@
                     android:id="@+id/btnHot2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:background="@color/black_spotify"
                     android:text=""
                     app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
@@ -81,7 +82,7 @@
                     android:id="@+id/btnHot3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:background="@color/black_spotify"
                     android:text=""
                     app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
@@ -105,10 +106,34 @@
         android:text="Được đề xuất"/>
 
 
-    <ListView
-        android:id="@+id/lvSongs"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="74dp"
+            android:layout_height="73dp"
+            android:background="@color/black_spotify"
+            app:layout_constraintBottom_toBottomOf="@+id/lvSongs"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/lvSongs"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" >
+
+        </ListView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
