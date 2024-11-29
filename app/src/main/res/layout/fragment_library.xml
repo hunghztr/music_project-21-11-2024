@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_spotify"
+    android:background="@drawable/custom_background"
     android:orientation="vertical"
     tools:context=".fragment.LibraryFragment">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textSize="25sp"
-        android:textColor="@color/white_50"
+        android:textColor="@color/black_spotify"
         android:text="Danh Sách Bài Hát Yêu Thích"/>
     <View
         android:layout_gravity="center"

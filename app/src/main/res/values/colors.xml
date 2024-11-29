@@ -8,4 +8,5 @@
     <color name="white_spotify">#FFFFFF</color>
     <color name="gray_spotify">#B3B3B3</color>
     <color name="white_50">#F0F2F5</color>
+   <color name="gray_white" >#D1D8E0</color>
 </resources>

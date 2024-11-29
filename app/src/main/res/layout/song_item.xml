@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@color/black_spotify">
+    android:background="@drawable/custom_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Bầu Trời Mới"
-                android:textColor="@color/white_spotify"
+                android:textColor="@color/black_spotify"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Da Lab - Minh Tốc"
-                android:textColor="@color/white_spotify"
+                android:textColor="@color/black_spotify"
                 android:textSize="18sp" />
 
             <TextView

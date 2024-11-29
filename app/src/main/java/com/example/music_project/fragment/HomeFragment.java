@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     ArrayList<Song> songs;
     ListView lvSongs;
     SongAdapter adaper;
-    Button btnHot1, btnHot2 , btnHot3;
+    Button btnHot1, btnHot2 ;
     ArrayList<Album> albums;
     TextView lbAlbum;
 
@@ -64,13 +64,11 @@ public class HomeFragment extends Fragment {
         lbAlbum = view.findViewById(R.id.lbAlbum);
         btnHot1 = view.findViewById(R.id.btnHot1);
         btnHot2 = view.findViewById(R.id.btnHot2);
-        btnHot3 = view.findViewById(R.id.btnHot3);
+
         btnHot1.setBackgroundResource(albums.get(0).getId());
         btnHot1.setTag(albums.get(0).getId());
         btnHot2.setBackgroundResource(albums.get(1).getId());
         btnHot2.setTag(albums.get(1).getId());
-        btnHot3.setBackgroundResource(albums.get(2).getId());
-        btnHot3.setTag(albums.get(2).getId());
         lbAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,18 +95,6 @@ public class HomeFragment extends Fragment {
             }
         });
         btnHot2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Animation.setAnimation(view);
-                ArrayList<Song> songs1 = helper.getAllSongsByAlbum((int)view.getTag());
-                Song song = songs1.get(0);
-                Intent intent = new Intent(getActivity(),SubActivity.class);
-                intent.putExtra("song",song);
-                intent.putExtra("songs",songs1);
-                startActivity(intent);
-            }
-        });
-        btnHot3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Animation.setAnimation(view);

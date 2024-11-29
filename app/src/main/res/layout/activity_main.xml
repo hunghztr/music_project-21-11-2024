@@ -5,11 +5,12 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_spotify"
+    android:background="@drawable/custom_background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
     <FrameLayout
+        android:background="@drawable/custom_background"
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="650dp"
@@ -28,7 +29,7 @@
             app:itemRippleColor="@color/black_yt"
             android:layout_margin="10dp"
             android:background="@drawable/custom_navi"
-            app:itemIconTint="@color/white_50"
+            app:itemIconTint="@color/black_spotify"
             app:menu="@menu/menu" />
     </RelativeLayout>
 

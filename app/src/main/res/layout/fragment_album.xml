@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.AlbumFragment"
-    android:background="@color/black_spotify"
+    android:background="@drawable/custom_background"
     android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +12,7 @@
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textColor="@color/white_50"
+        android:textColor="@color/black_spotify"
         android:textSize="30sp"
         android:text="Album"/>
     <View

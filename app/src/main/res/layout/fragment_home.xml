@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment"
-    android:background="@color/black_spotify"
+    android:background="@drawable/custom_background"
     android:orientation="vertical">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:elevation="10dp">
         <TextView
             android:id="@+id/lbAlbum"
             android:layout_marginStart="10dp"
@@ -21,16 +23,17 @@
             android:text="Album Mới Nhất"
             android:textSize="30sp"
             android:textStyle="bold"
-            android:textColor="@color/white_50"
+            android:textColor="@color/black_spotify"
             />
         <Button
             android:layout_marginTop="10dp"
             android:background="@drawable/baseline_arrow_forward_ios_24"
             android:id="@+id/btnFoward"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="10dp"
             android:text=""
-            app:backgroundTint="@null" />
+            app:backgroundTint="@color/black_spotify" />
     </LinearLayout>
     <HorizontalScrollView
 
@@ -38,13 +41,15 @@
         android:layout_height="210dp">
 
         <LinearLayout
-
             android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             android:orientation="horizontal">
             <androidx.cardview.widget.CardView
-                android:layout_marginEnd="20dp"
+
+                app:cardElevation="10dp"
+                android:layout_marginStart="10dp"
                 app:cardCornerRadius="15dp"
                 android:layout_width="150dp"
                 android:layout_height="170dp"
@@ -53,12 +58,15 @@
                     android:id="@+id/btnHot1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/white_50"
                     android:text=""
                     app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_marginEnd="20dp"
+
+                app:cardElevation="10dp"
+                android:layout_marginStart="50dp"
                 app:cardCornerRadius="15dp"
                 android:layout_width="150dp"
                 android:layout_height="170dp" >
@@ -67,24 +75,11 @@
                     android:id="@+id/btnHot2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
+                    android:background="@color/white_50"
                     android:text=""
                     app:backgroundTint="@null" />
             </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:layout_marginEnd="20dp"
-                app:cardCornerRadius="15dp"
-                android:layout_width="150dp"
-                android:layout_height="170dp" >
 
-                <Button
-                    android:id="@+id/btnHot3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    android:text=""
-                    app:backgroundTint="@null" />
-            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -100,12 +95,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textColor="@color/white_50"
+        android:textColor="@color/black_spotify"
         android:textSize="18sp"
         android:text="Được đề xuất"/>
 
 
     <ListView
+        android:background="@drawable/custom_background"
         android:id="@+id/lvSongs"
         android:layout_width="match_parent"
         android:layout_height="400dp" />
