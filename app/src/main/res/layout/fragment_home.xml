@@ -101,10 +101,10 @@
 
 
     <ListView
-        android:background="@drawable/custom_background"
         android:id="@+id/lvSongs"
         android:layout_width="match_parent"
-        android:layout_height="400dp" />
+        android:layout_height="375dp"
+        android:background="@drawable/custom_background" />
 
 
 </LinearLayout>
