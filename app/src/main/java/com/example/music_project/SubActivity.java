@@ -34,7 +34,7 @@ public class SubActivity extends AppCompatActivity {
 
     DatabaseHelper helper;
     Button button, btnNextSong, btnPreSong, btnSkipNext , btnSkipPre , btnVolume , btnBack;
-    ToggleButton btnAdd;
+    Button btnAdd;
     MediaPlayer player;
     SeekBar sbTime;
     SeekBar sbVolume;
@@ -67,13 +67,11 @@ public class SubActivity extends AppCompatActivity {
         songs = (ArrayList<Song>) intent.getSerializableExtra("songs");
         btnSkipPre = findViewById(R.id.btnSkipPre);
         btnAdd = findViewById(R.id.btnAdd);
-        btnAdd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    helper.addFauSong(song);
-                    Toast.makeText(SubActivity.this,"Đã thêm vào playlist",Toast.LENGTH_LONG).show();
-                }
+            public void onClick(View view) {
+                helper.addFauSong(song);
+                Toast.makeText(SubActivity.this,"Đã thêm vào playlist",Toast.LENGTH_LONG).show();
             }
         });
         lbStart = findViewById(R.id.lbStart);

@@ -57,7 +57,7 @@
                 app:cardCornerRadius="50dp"
                 app:cardElevation="20dp">
 
-                <ToggleButton
+                <Button
                     android:id="@+id/btnAdd"
                     android:layout_width="50dp"
 
